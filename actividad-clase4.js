@@ -3,6 +3,7 @@ const fs = require("fs")
 class ProductManager{
     constructor(path){
         this.path = path
+        this.products = []
     }
     fileExist(){
         return fs.existsSync(this.path)
@@ -35,10 +36,17 @@ class ProductManager{
                 // Validacion para completar los campos
                 if (!title || !description || !price || !image || !code || !stock ) {
                     return console.log("Todos los campos son obligatorios");
-                } 
+                }
+                // id autoincrementable
+                let id;
+                if (this.products.length == 0) {
+                    id=1
+                } else {
+                    id = this.products[this.products.length - 1].id + 1
+                }
                 // Estructura del producto
                 const product = {
-                    id : 1,
+                    id : id,
                     title,
                     description,
                     price,
@@ -46,9 +54,11 @@ class ProductManager{
                     code,
                     stock
                 }
+                this.products.push(product)
                 // trasnformar a json para poder pushear
                 const JsonContent = JSON.parse(content)
-                JsonContent.push(product)
+                JsonContent.push(this.products)
+
                 // volver a trasnformar a string para sobreescribir
                 await fs.promises.writeFile(this.path, JSON.stringify(JsonContent, null, "\t"))
                 console.log("producto agregado");
@@ -70,9 +80,11 @@ class ProductManager{
 const operations = async() => {
     try {
         const prodManager = new ProductManager("./productos.json")
-        await prodManager.addProd("titulo", "descripcion", 210, "sin imagen", "123",)
-        const prods = await prodManager.getProduct()
-        console.log(prods);
+        prodManager.addProd("titulo", "descripcion", 210, "sin imagen", "123",)
+        prodManager.addProd("titulo2", "descripcion de prueba", 300, "sin imagen", "1234")
+        prodManager.addProd("titulo2", "descripcion de prueba", 300, "sin imagen", "1234")
+        // const prods = await prodManager.getProduct()
+        // console.log(prods);
     } catch (error) {
         console.log(error.message);
     }

@@ -29,7 +29,7 @@ class ProductManager {
 
         const codeExist = this.products.find((prod) => prod.code === code)
         if (codeExist) {
-           return console.log("el código ingresado ya existe");
+           return console.error("el código ingresado ya existe");
         }else{
             const prod = {
                 id : id,

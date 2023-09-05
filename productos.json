@@ -1,0 +1,33 @@
+[
+	[
+		{
+			"id": 1,
+			"title": "titulo",
+			"description": "descripcion",
+			"price": 200,
+			"image": "sin imagen",
+			"code": "123",
+			"stock": 30
+		}
+	],
+	[
+		{
+			"id": 1,
+			"title": "titulo",
+			"description": "descripcion",
+			"price": 210,
+			"image": "sin imagen",
+			"code": "123",
+			"stock": 30
+		}
+	],
+	{
+		"id": 1,
+		"title": "titulo",
+		"description": "descripcion",
+		"price": 210,
+		"image": "sin imagen",
+		"code": "123",
+		"stock": 30
+	}
+]

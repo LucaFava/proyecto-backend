@@ -3,7 +3,6 @@ const fs = require("fs")
 class ProductManager{
     constructor(path){
         this.path = path
-        this.products = []
     }
     fileExist(){
         return fs.existsSync(this.path)
@@ -33,38 +32,38 @@ class ProductManager{
                 // leer el archivo
                 const content = await fs.promises.readFile(this.path, "utf-8")
 
-                // Validacion para completar los campos
-                if (!title || !description || !price || !image || !code || !stock ) {
-                    return console.log("Todos los campos son obligatorios");
-                }
-                // id autoincrementable
+                // transformar a json para poder pushear
+                const prodJson = JSON.parse(content)
+
+                // id autincrementable
                 let id;
-                if (this.products.length == 0) {
+                if (prodJson == 0) {
                     id=1
                 } else {
-                    id = this.products[this.products.length - 1].id + 1
+                    id = prodJson[prodJson.length - 1].id + 1
                 }
-                // Estructura del producto
-                const product = {
-                    id : id,
-                    title,
-                    description,
-                    price,
-                    image,
-                    code,
-                    stock
+                // validacion del code
+                const codeExist = prodJson.find((prod) => prod.code === code)
+                if (codeExist) {
+                    return console.error("el código ingresado ya existe");
+                } else {
+                    const newProd = {
+                        id : id,
+                        title,
+                        description,
+                        price,
+                        image,
+                        code,
+                        stock
+                    }
+                    
+                    prodJson.push(newProd)
                 }
-                this.products.push(product)
-                // trasnformar a json para poder pushear
-                const JsonContent = JSON.parse(content)
-                JsonContent.push(this.products)
-
-                // volver a trasnformar a string para sobreescribir
-                await fs.promises.writeFile(this.path, JSON.stringify(JsonContent, null, "\t"))
-                console.log("producto agregado");
+               
+                // transfromar a string otra vez para sobreescribir
+                await fs.promises.writeFile(this.path, JSON.stringify(prodJson, null, "\t"))
                 
-
-
+                console.log("producto agregado");
             } else {
                 throw new Error ("no es posible leer el archivo")
             }
@@ -73,18 +72,42 @@ class ProductManager{
             throw error;
         }
     }
+    
+    getProductsById(idProd){
+        const content = fs.readFileSync(this.path, "utf-8")
+        const prodJson = JSON.parse(content)
+        const searchId = prodJson.find((prod) => prod.id === idProd)
+        if (searchId) {
+            console.log(searchId);
+        } else {
+            console.log("no se ha encontrado el producto");
+        }
+    }
 
+    deleteProd(idProd){
+        const content = fs.readFileSync(this.path, "utf-8")
+        const prodJson = JSON.parse(content) 
+        if (prodJson.filter((prod) => prod.id != idProd)) {
+            fs.writeFileSync(this.path, JSON.stringify(prodJson, null, "\t"))
+            console.log("Producto eliminado");
+        }
+    }
 }
 
 // OPERACIONES
+
 const operations = async() => {
     try {
         const prodManager = new ProductManager("./productos.json")
-        prodManager.addProd("titulo", "descripcion", 210, "sin imagen", "123",)
-        prodManager.addProd("titulo2", "descripcion de prueba", 300, "sin imagen", "1234")
-        prodManager.addProd("titulo2", "descripcion de prueba", 300, "sin imagen", "1234")
-        // const prods = await prodManager.getProduct()
-        // console.log(prods);
+        // prodManager.addProd("nombre", "descripcion", 200, "sin imagen", "code")
+        // prodManager.addProd("nombre", "descripcion", 200, "sin imagen", "code")
+        // prodManager.addProd("nombre", "descripcion", 400, "sin imagen", "code")
+        
+        //const prods = await prodManager.getProduct()
+        prodManager.deleteProd(2)
+        prodManager.getProductsById(2)
+        
+        
     } catch (error) {
         console.log(error.message);
     }

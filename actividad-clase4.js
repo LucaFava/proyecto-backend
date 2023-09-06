@@ -87,10 +87,9 @@ class ProductManager{
     deleteProd(idProd){
         const content = fs.readFileSync(this.path, "utf-8")
         const prodJson = JSON.parse(content) 
-        if (prodJson.filter((prod) => prod.id != idProd)) {
-            fs.writeFileSync(this.path, JSON.stringify(prodJson, null, "\t"))
-            console.log("Producto eliminado");
-        }
+        const filter = prodJson.filter((prod) => prod.id != idProd)
+        fs.writeFileSync(this.path, JSON.stringify(filter, null, "\t"))
+        console.log("producto eliminado");
     }
 }
 
@@ -102,10 +101,11 @@ const operations = async() => {
         // prodManager.addProd("nombre", "descripcion", 200, "sin imagen", "code")
         // prodManager.addProd("nombre", "descripcion", 200, "sin imagen", "code")
         // prodManager.addProd("nombre", "descripcion", 400, "sin imagen", "code")
-        
-        //const prods = await prodManager.getProduct()
+
+        // prodManager.getProductsById(2)
+
         prodManager.deleteProd(2)
-        prodManager.getProductsById(2)
+        
         
         
     } catch (error) {

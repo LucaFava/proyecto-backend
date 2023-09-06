@@ -9,15 +9,6 @@
 		"stock": 30
 	},
 	{
-		"id": 2,
-		"title": "nombre",
-		"description": "descripcion",
-		"price": 200,
-		"image": "sin imagen",
-		"code": "code",
-		"stock": 30
-	},
-	{
 		"id": 3,
 		"title": "nombre",
 		"description": "descripcion",

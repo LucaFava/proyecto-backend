@@ -1,0 +1,52 @@
+[
+	{
+		"id": 1,
+		"title": "campera Nike",
+		"description": "campera nike xxl",
+		"category": "campera",
+		"price": 500,
+		"image": "sin imagen",
+		"code": "123",
+		"stock": 30
+	},
+	{
+		"id": 2,
+		"title": "air jordan retro 5",
+		"description": "zapatillas air jordan retro 5 negras",
+		"category": "zapatilla",
+		"price": 1000,
+		"image": "sin imagen",
+		"code": "124",
+		"stock": 30
+	},
+	{
+		"id": 3,
+		"title": "remera adidas",
+		"description": "remera deportiva adidas blanca",
+		"category": "remeras",
+		"price": 400,
+		"image": "sin imagen",
+		"code": "145",
+		"stock": 30
+	},
+	{
+		"id": 4,
+		"title": "yeezy zebra",
+		"description": "yeezy adidas",
+		"category": "zapatilla",
+		"price": 800,
+		"image": "sin imagen",
+		"code": "122",
+		"stock": 30
+	},
+	{
+		"id": 5,
+		"title": "jordan retro",
+		"description": "jordan retro rojas",
+		"category": "zapatilla",
+		"price": 1200,
+		"image": "sin imagen",
+		"code": "146",
+		"stock": 30
+	}
+]

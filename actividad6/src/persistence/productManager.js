@@ -18,7 +18,7 @@ import fs from "fs"
                 const contentJson = JSON.parse(content)
                 return contentJson
             } else {
-                
+                console.log("no se pudieron obtener los productos");
             }
         } catch (error) {
             console.log(error.message);
@@ -105,6 +105,8 @@ const operations = async() => {
         prodManager.addProd("jordan retro", "jordan retro rojas","zapatilla", 1200, "sin imagen", "146")
         prodManager.addProd("yeezy zebra", "yeezy adidas","zapatilla", 800, "sin imagen", "122")
 
+        //const todos = await prodManager.getProduct()
+        //console.log(todos);
         
         // prodManager.getProductsById(2)
 

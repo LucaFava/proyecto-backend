@@ -66,7 +66,7 @@ import fs from "fs"
                 
                 //console.log("producto agregado");
             } else {
-                throw new Error ("no es posible leer el archivo")
+                //throw new Error ("no es posible leer el archivo")
             }
         } catch (error) {
             console.log(error.message);

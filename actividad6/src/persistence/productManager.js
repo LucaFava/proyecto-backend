@@ -98,7 +98,7 @@ import fs from "fs"
 
 const operations = async() => {
     try {
-        const prodManager = new ProductManager("../productos.json")
+        const prodManager = new ProductManager("./files/productos.json")
         prodManager.addProd("campera Nike", "campera nike xxl","campera", 500, "sin imagen", "123")
         prodManager.addProd("air jordan retro 5", "zapatillas air jordan retro 5 negras","zapatilla", 1000, "sin imagen", "124")
         prodManager.addProd("remera adidas", "remera deportiva adidas blanca","remeras", 400, "sin imagen", "145")

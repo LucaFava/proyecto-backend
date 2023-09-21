@@ -4,8 +4,11 @@ import { ProductManager } from "./persistence/productManager.js";
 import { prodRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 
-const managerProductService =  new ProductManager("../productos.json")
-console.log(managerProductService);
+import { __dirname } from "./utils.js";
+import { productsService } from "./persistence/index.js";
+
+// const managerProductService =  new ProductManager("../productos.json")
+console.log(productsService);
 const port = 8080
 
 const app = express()

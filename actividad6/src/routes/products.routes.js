@@ -1,5 +1,4 @@
 import { Router } from "express"
-import { ProductManager } from "../persistence/productManager.js"
 import { productsService } from "../persistence/index.js"
 
 
@@ -83,17 +82,21 @@ router.put("/pid", (req,res)=>{
 
 
  //ruta para eliminar un producto
- router.delete("/:pid", (req,res)=>{
-    const id = parseInt(req.params.pid)
-    const products = productsService.getProduct()
+ router.delete("/:pid", async(req,res)=>{
+    try {
+        const id = parseInt(req.params.pid)
+    let products = await productsService.getProduct()
     const prodIndex = products.findIndex(p => p.id === id)
 
-    if (prodIndex>=0) {
+    if (prodIndex>0) {
         const newProds = products.filter(p=>p.id !== id)
         products = newProds;
         res.json({message:"producto eliminado"})
     } else {
-        res.json({message:"no se ha podido eliminar el producto"})
+        res.json({message:"error"})
+    }
+    } catch (error) {
+        res.json({message:error.message})        
     }
  })
 

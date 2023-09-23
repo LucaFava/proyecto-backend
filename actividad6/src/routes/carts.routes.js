@@ -28,6 +28,9 @@ router.post("/:cid/product/:pid", async(req,res) => {
     try {
         const cartId = parseInt(req.params.cid)
         const productId = parseInt(req.params.pid)
+        const quantity = 1
+        await cartsService.addProdCart(cartId, productId, quantity)
+
 
         res.json({message:"peticion recibida"})
     } catch (error) {

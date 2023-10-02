@@ -60,16 +60,17 @@ router.post("/", async(req,res)=> {
 })
 
 // ruta para actualizar un producto
-router.put("/pid", (req,res)=>{
+router.put("/:pid", async(req,res)=>{
     try {
         const id = parseInt(req.params.pid);
         const newInfo = req.body;
-        const products = productsService.getProduct()
+        let products = await productsService.getProduct()
         const prodIndex = products.findIndex(p=>p.id === id)
-        if (prod>=0) {
-            const newProdActualiced = [...products]
-            newProdActualiced[prodIndex] = newInfo;
-            products = newProdActualiced;
+        if (prodIndex>=0) {
+            let newProdActualiced = [...products]
+            console.log(newProdActualiced);
+            newProdActualiced[prodIndex]=newInfo;
+            products = newProdActualiced
             
             res.json({message:"usuario actualizado"})
         } else {
@@ -85,16 +86,12 @@ router.put("/pid", (req,res)=>{
  router.delete("/:pid", async(req,res)=>{
     try {
         const id = parseInt(req.params.pid)
-    let products = await productsService.getProduct()
-    const prodIndex = products.findIndex(p => p.id === id)
-
-    if (prodIndex>0) {
-        const newProds = products.filter(p=>p.id !== id)
-        products = newProds;
-        res.json({message:"producto eliminado"})
-    } else {
-        res.json({message:"error"})
-    }
+        let productDelete = await productsService.deleteProd(id)
+        if (productDelete) {
+            res.json({message : "producto eliminado"})
+        } else {
+            res.json({message : "el producto no existe"})
+        }
     } catch (error) {
         res.json({message:error.message})        
     }

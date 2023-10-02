@@ -1,0 +1,14 @@
+<h1>Inicio</h1>
+
+{{#each products}}
+        <article class="card">
+            <div class="img">
+                {{this.image}}
+            </div>
+            <div class="datos">
+                {{this.title}}
+
+                {{this.price}}
+            </div>
+        </article>
+{{/each}}

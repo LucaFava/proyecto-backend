@@ -4,6 +4,7 @@ import { cartsService } from "../persistence/index.js"
 
 const router = Router()
 
+// ruta para mostrar todos los carritos 
 router.get("/", async(req,res) => {
     try {
         const carts = await cartsService.getCart()
@@ -14,6 +15,7 @@ router.get("/", async(req,res) => {
     }
 })
 
+// ruta para crear un carrito
 router.post("/", async(req,res)=>{
     try {
         const cartCreated = await cartsService.createCart()
@@ -24,6 +26,7 @@ router.post("/", async(req,res)=>{
     }
 })
 
+// ruta para agregar un producto al carrito
 router.post("/:cid/product/:pid", async(req,res) => {
     try {
         const cartId = parseInt(req.params.cid)
@@ -38,5 +41,19 @@ router.post("/:cid/product/:pid", async(req,res) => {
     }
 })
 
+// ruta para buscar un carrito por id
 
-export {router as cartsRouter}
+router.get("/:cid", async(req,res)=>{
+    const idCart = parseInt(req.params.cid)
+
+    const carts = await cartsService.getCart()
+    
+    const cartElm = carts.find((c)=> c.id === idCart)
+    if (cartElm) {
+        res.json(cartElm)
+    } else {
+        res.json({message:"no se pudo encontrar el carrito"})
+    }
+})
+
+export {router as cartsRouter}  

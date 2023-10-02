@@ -1,66 +1,71 @@
 import express from "express"
-import { ProductManager } from "./persistence/productManager.js";
 
 import { prodRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 
 import { __dirname } from "./utils.js";
+import path from "path"
+
+import { engine } from "express-handlebars"
+
+import { Server } from "socket.io"
 import { productsService } from "./persistence/index.js";
 
+import { viewsRouter } from "./routes/views.routes.js";
+
 // const managerProductService =  new ProductManager("../productos.json")
-console.log(productsService);
+// console.log(productsService);
 const port = 8080
 
 const app = express()
 
-app.listen(port, () => console.log("servidor funcionando")) 
+const httpServer = app.listen(port, () => console.log("servidor funcionando")) 
 
-app.use(express.static("public"))
+// servidor de websocket
+const io = new Server(httpServer)
+
+
+// ruta de las views
+app.use(viewsRouter) //en este caso no hay una ruta especificada, ya que la idea es que cuando el usuario ingrese ya se muestren los productos
+
+// middleware
+app.use(express.static(path.join(__dirname, "/public")))
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-// routes
+// config de handlebars
+app.engine('.hbs', engine({extname: '.hbs'}));
+app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname, "/views"));
+
+
+
+// routes principales
+ 
 app.use("/api/products", prodRouter)
 app.use("/api/carts", cartsRouter)
 
 
+// socket configuracion
+io.on("connection", async(socket)=>{
+    console.log("cliente conectado");
+    const products = await productsService.getProduct()
+
+    socket.emit("products", products)
+
+    // recibir el prod del socketClient
+    socket.on("addProd", async(data)=>{
+        await productsService.addProd(data)
+
+       const products = await productsService.getProduct()
+       console.log(products);
+       io.emit("products", products)
+    })
+})
 
 
 
 
 
 
-// rutas del servidor
-// app.get("/products", async(req, res) => {
-//     try {
-//         const products = await managerProductService.getProduct()
-//         const { limit } = req.query;
-//         const limitNumber = parseInt(limit)
-//         if (limit) {
-//             const productsLimit = products.slice(0,limitNumber)
-//             res.send(productsLimit)
-//         } else {
-//             res.send(products)
-//         }
-        
-//     } catch (error) {
-//         res.send(error.message)
-//     }
-// })
-// ruta para pedir por id
-// app.get("/products/:pid", async(req, res)=> {
-//     try {
-//         const id = parseInt(req.params.pid)
-//         const products = await managerProductService.getProduct()
-//         const prodId = products.find((p)=> p.id === id)
-
-//         if (prodId) {
-//             res.send(prodId)
-//         } else {
-//             console.log("no se pudo encontrar el producto solicitado");
-//         }
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// })

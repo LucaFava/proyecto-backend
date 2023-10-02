@@ -10,16 +10,6 @@
 		"stock": 30
 	},
 	{
-		"id": 2,
-		"title": "air jordan retro 5",
-		"description": "zapatillas air jordan retro 5 negras",
-		"category": "zapatilla",
-		"price": 1000,
-		"image": "sin imagen",
-		"code": "124",
-		"stock": 30
-	},
-	{
 		"id": 3,
 		"title": "remera adidas",
 		"description": "remera deportiva adidas blanca",
@@ -47,6 +37,26 @@
 		"price": 1200,
 		"image": "sin imagen",
 		"code": "146",
+		"stock": 30
+	},
+	{
+		"id": 6,
+		"title": "campera Puma",
+		"description": "campera puma xxl",
+		"category": "campera",
+		"price": 13000,
+		"image": "sin imagen",
+		"code": "162",
+		"stock": 30
+	},
+	{
+		"id": 7,
+		"title": "zapatillas Puma",
+		"description": "zapatillas puma 43",
+		"category": "zapatilla",
+		"price": 20000,
+		"image": "sin imagen",
+		"code": "678",
 		"stock": 30
 	}
 ]

@@ -45,7 +45,7 @@ router.get("/:pid", async(req,res)=>{
 router.post("/", async(req,res)=> {
     try {
         const prodInfo = req.body
-
+        
             if (prodInfo) {
                 await productsService.addProd(prodInfo)
                 await res.json({message:"producto agregado"})

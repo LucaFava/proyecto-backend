@@ -9,7 +9,7 @@ form.addEventListener("submit", (e)=>{
     e.preventDefault(); //en esta linea lo que hacemos es evitar ese recargo de página que tiene por defecto el formulario 
     const formInfo = new FormData(form) //captura todos los valores de los campos de texto del form
     
-    const jsonInfo = {};
+    const jsonInfo = {}
     //forOff lo que hace es que va iterando en cada elemento de un array para crear un objeto
     for(const [key, value] of formInfo.entries()) {
         jsonInfo[key] = value

@@ -59,7 +59,7 @@ io.on("connection", async(socket)=>{
         await productsService.addProd(data)
 
        const products = await productsService.getProduct()
-       console.log(products);
+       
        io.emit("products", products)
     })
 })

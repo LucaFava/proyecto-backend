@@ -58,5 +58,14 @@
 		"image": "sin imagen",
 		"code": "678",
 		"stock": 30
+	},
+	{
+		"id": 8,
+		"title": "air force",
+		"description": "zapatillas nike 43",
+		"category": "zapatilla",
+		"price": 12000,
+		"code": "739",
+		"stock": 30
 	}
 ]

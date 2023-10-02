@@ -26,7 +26,7 @@ import fs from "fs"
         }
     }
 
-    async addProd (title, description, category, price, image, code, stock=30){
+    async addProd ({title, description, category, price, image, code, stock=30}){
         try {
             if (this.fileExist()) {
                 // leer el archivo

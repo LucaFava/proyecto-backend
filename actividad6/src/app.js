@@ -15,7 +15,7 @@ import { viewsRouter } from "./routes/views.routes.js";
 
 // const managerProductService =  new ProductManager("../productos.json")
 // console.log(productsService);
-const port = 8080
+const port = process.env.PORT || 8080
 
 const app = express()
 

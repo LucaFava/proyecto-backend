@@ -30,10 +30,9 @@ socketClient.on("products", (data)=>{
 
     data.forEach(element => {
         prodsElm +=
-        `<li>
-            <p> Nombre: ${element.title}</p>
-            <p> Precio: ${element.price}</p>
-        </li>`
+        `<div><p> Nombre: ${element.title}</p>
+        <p> Precio: ${element.price}</p></div>
+        <button onClick="deleteProd(${element.id})">Eliminar</button>`
         prods.innerHTML=prodsElm
     });
 })

@@ -1,5 +1,7 @@
 import { Router } from "express"
 import { productsService } from "../persistence/index.js"
+import fs from "fs"
+import { __dirname } from "../utils.js"
 
 
 const router = Router()
@@ -64,17 +66,12 @@ router.put("/:pid", async(req,res)=>{
     try {
         const id = parseInt(req.params.pid);
         const newInfo = req.body;
-        let products = await productsService.getProduct()
-        const prodIndex = products.findIndex(p=>p.id === id)
-        if (prodIndex>=0) {
-            let newProdActualiced = [...products]
-            console.log(newProdActualiced);
-            newProdActualiced[prodIndex]=newInfo;
-            products = newProdActualiced
-            
-            res.json({message:"usuario actualizado"})
+
+        const update = productsService.updateProd(id, newInfo)
+        if (update) {
+             return res.json({message:"producto actualizado"})
         } else {
-            res.json({message:"el producto no existe"})
+            res.json({message:"el producto no se pudo actualizar"})
         }
     } catch (error) {
         res.json({message:error.message})
@@ -88,9 +85,9 @@ router.put("/:pid", async(req,res)=>{
         const id = parseInt(req.params.pid)
         let productDelete = await productsService.deleteProd(id)
         if (productDelete) {
-            res.json({message : "producto eliminado"})
+           return res.json({message : "producto eliminado"})
         } else {
-            res.json({message : "el producto no existe"})
+           return res.json({message : "el producto no existe"})
         }
     } catch (error) {
         res.json({message:error.message})        

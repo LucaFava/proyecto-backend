@@ -56,8 +56,9 @@ io.on("connection", async(socket)=>{
 
     // recibir el prod del socketClient
     socket.on("addProd", async(data)=>{
+        // agregamos el prod
         await productsService.addProd(data)
-
+        // volvemos a enviar todos los productos
        const products = await productsService.getProduct()
        
        io.emit("products", products)

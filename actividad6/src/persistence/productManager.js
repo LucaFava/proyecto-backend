@@ -90,7 +90,23 @@ import fs from "fs"
         const prodJson = JSON.parse(content) 
         const filter = prodJson.filter((prod) => prod.id != idProd)
         fs.writeFileSync(this.path, JSON.stringify(filter, null, "\t"))
-        console.log("producto eliminado");
+        return console.log("producto eliminado");
+    }
+
+    updateProd(id, newInfo){
+        const products = fs.readFileSync(this.path, "utf-8")
+        let prodJson = JSON.parse(products)
+        const prodIndex = prodJson.findIndex(p=>p.id === id)
+        if (prodIndex>=0) {
+            let newProdActualiced = [...prodJson]
+            
+            newProdActualiced[prodIndex]=newInfo;
+            prodJson = newProdActualiced
+
+            fs.writeFileSync(this.path, JSON.stringify(prodJson, null, "\t"))
+        } else {
+            console.log("error");
+        }
     }
 }
 

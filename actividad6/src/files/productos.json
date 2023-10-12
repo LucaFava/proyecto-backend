@@ -4,7 +4,7 @@
 		"title": "campera Nike",
 		"description": "campera nike xxl",
 		"category": "campera",
-		"price": 500,
+		"price": 1500,
 		"image": "sin imagen",
 		"code": "123",
 		"stock": 30
@@ -47,25 +47,6 @@
 		"price": 13000,
 		"image": "sin imagen",
 		"code": "162",
-		"stock": 30
-	},
-	{
-		"id": 7,
-		"title": "zapatillas Puma",
-		"description": "zapatillas puma 43",
-		"category": "zapatilla",
-		"price": 20000,
-		"image": "sin imagen",
-		"code": "678",
-		"stock": 30
-	},
-	{
-		"id": 8,
-		"title": "air force",
-		"description": "zapatillas nike 43",
-		"category": "zapatilla",
-		"price": 12000,
-		"code": "739",
 		"stock": 30
 	}
 ]

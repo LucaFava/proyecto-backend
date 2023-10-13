@@ -104,6 +104,8 @@ import fs from "fs"
             prodJson = newProdActualiced
 
             fs.writeFileSync(this.path, JSON.stringify(prodJson, null, "\t"))
+
+            return console.log("producto actualizado");
         } else {
             console.log("error");
         }

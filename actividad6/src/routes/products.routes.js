@@ -69,7 +69,7 @@ router.put("/:pid", async(req,res)=>{
 
         const update = productsService.updateProd(id, newInfo)
         if (update) {
-             return res.json({message:"producto actualizado"})
+            res.json({message:"producto actualizado"})
         } else {
             res.json({message:"el producto no se pudo actualizar"})
         }

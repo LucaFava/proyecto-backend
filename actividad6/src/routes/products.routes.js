@@ -10,18 +10,10 @@ const router = Router()
 // ruta get para mostrar todos los productos, o un limite de productos
 router.get("/", async(req, res) => {
     try {
-        const products = await productsService.getProduct()
-        const { limit } = req.query;
-        const limitNumber = parseInt(limit)
-        if (limit) {
-            const productsLimit = products.slice(0,limitNumber)
-            res.json({data:productsLimit})
-        } else {
-            res.json({data:products})
-        }
-     
+        const result = await productsService.getProduct()
+        res.json({status: "success", data: result})
     } catch (error) {
-        res.send(error.message)
+        res.json({status: "error", message: error.message})
     }
 })
 
@@ -47,14 +39,8 @@ router.get("/:pid", async(req,res)=>{
 router.post("/", async(req,res)=> {
     try {
         const prodInfo = req.body
-        
-            if (prodInfo) {
-                await productsService.addProd(prodInfo)
-                await res.json({message:"producto agregado"})
-            } else {
-                res.json({message:"no se pudo agregar el producto"})
-            }
-
+        const result = await productsService.addProd(prodInfo)
+        res.json({status: "success", data: result})
     } catch (error) {
         res.json({status:"error", message:error.message});
     }
@@ -64,15 +50,11 @@ router.post("/", async(req,res)=> {
 // ruta para actualizar un producto
 router.put("/:pid", async(req,res)=>{
     try {
-        const id = parseInt(req.params.pid);
+        const id = req.params.pid;
         const newInfo = req.body;
 
-        const update = productsService.updateProd(id, newInfo)
-        if (update) {
-            res.json({message:"producto actualizado"})
-        } else {
-            res.json({message:"el producto no se pudo actualizar"})
-        }
+        const result = await productsService.updateProd(id, newInfo)
+        res.json({status: "success", data: result})
     } catch (error) {
         res.json({message:error.message})
     }
@@ -82,15 +64,12 @@ router.put("/:pid", async(req,res)=>{
  //ruta para eliminar un producto
  router.delete("/:pid", async(req,res)=>{
     try {
-        const id = parseInt(req.params.pid)
-        let productDelete = await productsService.deleteProd(id)
-        if (productDelete) {
-           return res.json({message : "producto eliminado"})
-        } else {
-           return res.json({message : "el producto no existe"})
-        }
+        const id = req.params.pid;
+
+        const result = await productsService.updateProd(id)
+        res.json({status: "success", data: result})
     } catch (error) {
-        res.json({message:error.message})        
+        res.json({message:error.message})
     }
  })
 

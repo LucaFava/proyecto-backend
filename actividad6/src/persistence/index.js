@@ -4,9 +4,16 @@ import { CartManagerFiles } from "./cartsManagerFiles.js";
 import { __dirname } from "../utils.js";
 // path es una variable que no ayuda a unir rutas
 import path from "path"
+import { ProductsManagerMongo } from "./mongo/productsManagerMongo.js";
+import { CartsManagerMongo } from "./mongo/cartsManagerMongo.js"
+import { ChatManagerMongo } from "./mongo/chatManagerMongo.js";
+
 console.log("dirname: ", path.join(__dirname, "/files"));//unir rutas con path
 
 
 
-export const productsService = new ProductManager(path.join(__dirname, "/files/productos.json"))
-export const cartsService = new CartManagerFiles(path.join(__dirname, "/files/cart.json"))
+export const productsService = new ProductsManagerMongo()
+export const cartsService = new CartsManagerMongo()
+export const chatsService = new ChatManagerMongo()
+
+// new CartManagerFiles(path.join(__dirname, "/files/cart.json"))

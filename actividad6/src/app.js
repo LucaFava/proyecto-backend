@@ -12,6 +12,7 @@ import { Server } from "socket.io"
 import { productsService } from "./persistence/index.js";
 
 import { viewsRouter } from "./routes/views.routes.js";
+import { connectDB } from "./config/dbConnection.js";
 
 // const managerProductService =  new ProductManager("../productos.json")
 // console.log(productsService);
@@ -33,6 +34,10 @@ app.use(express.static(path.join(__dirname, "/public")))
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+
+
+//conexión base de datos
+connectDB();
 
 // config de handlebars
 app.engine('.hbs', engine({extname: '.hbs'}));

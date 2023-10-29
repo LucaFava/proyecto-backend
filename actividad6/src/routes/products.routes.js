@@ -40,7 +40,7 @@ router.post("/", async(req,res)=> {
     try {
         const prodInfo = req.body
         const result = await productsService.addProd(prodInfo)
-        res.json({status: "success", data: result})
+        res.json({status: "success", result})
     } catch (error) {
         res.json({status:"error", message:error.message});
     }

@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { cartsService } from "../persistence/index.js"
-
+import { productsService } from "../persistence/index.js"
 
 const router = Router()
 
@@ -20,40 +20,36 @@ router.post("/", async(req,res)=>{
     try {
         const cartCreated = await cartsService.createCart()
 
-        res.json({data:cartCreated})
+        res.json({status:"success",data:cartCreated})
     } catch (error) {
-        res.json({message:"error"})
+        res.json({message:error})
     }
 })
 
 // ruta para agregar un producto al carrito
 router.post("/:cid/product/:pid", async(req,res) => {
     try {
-        const cartId = parseInt(req.params.cid)
-        const productId = parseInt(req.params.pid)
-        const quantity = 1
-        await cartsService.addProdCart(cartId, productId, quantity)
+        const {cid: cartId, pid:prodId} = req.params;
+        const cart = await cartsService.getCartById(cartId)
+        const prod = await productsService.getProductsById(prodId)
+
+        const result = await cartsService.addProdCart(cartId, prodId)
 
 
-        res.json({message:"peticion recibida"})
+        res.json({status:"success", result})
     } catch (error) {
-        res.json({message:"error"})
+        res.json({message:error.message})
     }
 })
 
 // ruta para buscar un carrito por id
 
 router.get("/:cid", async(req,res)=>{
-    const idCart = parseInt(req.params.cid)
+    const idCart = req.params.cid
 
-    const carts = await cartsService.getCart()
-    
-    const cartElm = carts.find((c)=> c.id === idCart)
-    if (cartElm) {
-        res.json(cartElm)
-    } else {
-        res.json({message:"no se pudo encontrar el carrito"})
-    }
+    const cart = await cartsService.getCartById(idCart)
+
+    res.json({status:"succes", cart})
 })
 
 export {router as cartsRouter}  

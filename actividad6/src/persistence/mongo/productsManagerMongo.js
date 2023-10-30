@@ -66,4 +66,13 @@ export class ProductsManagerMongo {
         }
     };
 
+    async getProductPaginate(){
+        try {
+            const result = this.model.paginate({},{limit:5, page:1, lean:true});
+            return result;
+        } catch (error) {
+            console.log("getProductPaginate:", error.message);
+            throw new Error ("No se pudo mostrar el listado de los productos")
+        }
+    }
 }

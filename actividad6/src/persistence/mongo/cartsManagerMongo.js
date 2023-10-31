@@ -30,10 +30,23 @@ export class CartsManagerMongo{
         };
     };
     
+    async getCartById(idCart){
+        try {
+            const result = await this.model.findById(idCart).populate("products.productId"); //en caso de no encontrar el carrito solicitado el servidor puede devolver un undefinded, para evitar eso, hay que hacer una validacion para tener más controlado los resultados
+            if (!result) {
+                throw new Error("El carrito solicitado no existe, pruebe con otro")
+            };
+            return result;
+        } catch (error) {
+            console.log(error.message);
+            throw new Error("no se pudo obtener el carrito")
+        }
+    };
+
     async addProdCart(cartId, productId){
         try {
             // primero obtenemos el carrito
-            const cart = await this.model.getCartById(cartId)
+            const cart = await this.model.findById(cartId)
             // validacion de si el producto ya existe
             const prodExist = cart.products.find(e => e.productId = productId)
             // console.log("prodExist:", prodExist);
@@ -52,18 +65,7 @@ export class CartsManagerMongo{
             throw new Error("no se pudo agregar el carrito")
         }
     };
-    async getCartById(idCart){
-        try {
-            const result = await this.model.findById(idCart).populate("products.productId"); //en caso de no encontrar el carrito solicitado el servidor puede devolver un undefinded, para evitar eso, hay que hacer una validacion para tener más controlado los resultados
-            if (!result) {
-                throw new Error("El carrito solicitado no existe, pruebe con otro")
-            };
-            return result;
-        } catch (error) {
-            console.log(error.message);
-            throw new Error("no se pudo obtener el carrito")
-        }
-    };
+   
     async deleteProd(cartId, productId){
         try {
             const cart = await this.model.findById(cartId)

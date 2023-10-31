@@ -28,8 +28,9 @@ router.get("/realtimeproducts", (req, res)=>{
 })
 
 // ruta para la view del carrito
-router.get("/carts/:cid", (req, res)=>{
-    res.render("cart")
+router.get("/carts/:cid", async(req, res)=>{
+    const prodsCarts = await cartsService.getCart()
+    res.render("cart", prodsCarts)
 })
 
 

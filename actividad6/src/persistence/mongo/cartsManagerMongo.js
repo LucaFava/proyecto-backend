@@ -7,7 +7,16 @@ export class CartsManagerMongo{
     }
 
     async getCart(){
-
+        try {
+            const result = await this.model.find()
+            if (!result) {
+                throw new Error("El carrito solicitado no existe, pruebe con otro")
+            };
+            return result;
+        } catch (error) {
+            console.log(error.message);
+            throw new Error("no se pudo obtener el carrito")
+        }
     };
     async createCart(){
         try {

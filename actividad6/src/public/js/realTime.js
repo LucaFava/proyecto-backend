@@ -4,6 +4,9 @@ const prods = document.querySelector(".listRealTime")
 // formulario
 const form = document.querySelector("#createProdForm")
 
+
+
+
 // enviamos la info del form al socket del servidor
 form.addEventListener("submit", (e)=>{
     e.preventDefault(); //en esta linea lo que hacemos es evitar ese recargo de página que tiene por defecto el formulario 
@@ -22,17 +25,47 @@ form.addEventListener("submit", (e)=>{
 })
 
 
+
+// funcion para eliminar el producto
+const deleteProd = (_id)=>{
+    console.log("id del prod:",_id);
+}
 // recibimos los productos
 socketClient.on("products", (data)=>{
     console.log(data);
 
-    let prodsElm = ""
-
     data.forEach(element => {
-        prodsElm +=
-        `<div><p> Nombre: ${element.title}</p>
-        <p> Precio: ${element.price}</p></div>
-        <button onClick="deleteProd(${element.id})">Eliminar</button>`
-        prods.innerHTML=prodsElm
+        const article = document.createElement("article")
+        article.classList.add(".prodRealTime")
+        article.innerHTML = `
+        <div class="name"><h4>${element.title}</h4></div>
+        <div class="price"><p>${element.price}</p></div>
+        
+        <button onClick="deleteProd(${element._id})">Eliminar</button>
+        
+        `
+        prods.append(article)
     });
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+// prodsElm = ""
+
+//     data.forEach(element => {
+//         prodsElm +=
+//         `<div><p> Nombre: ${element.title}</p>
+//         <p> Precio: ${element.price}</p></div>
+//         <button onClick="deleteProd(${element.id})">Eliminar</button>`
+//         prods.innerHTML=prodsElm
+//     });

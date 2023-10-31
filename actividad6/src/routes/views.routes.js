@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { productsService } from "../persistence/index.js";
-
+import { cartsService } from "../persistence/index.js";
 
 const router = Router()
 
@@ -27,7 +27,10 @@ router.get("/realtimeproducts", (req, res)=>{
     res.render("realTime")
 })
 
-
+// ruta para la view del carrito
+router.get("/carts/:cid", (req, res)=>{
+    res.render("cart")
+})
 
 
 export {router as viewsRouter}

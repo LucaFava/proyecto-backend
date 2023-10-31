@@ -10,7 +10,7 @@ export class ProductsManagerMongo {
 
     async getProduct(){
         try {
-            const result = await this.model.find().populate().lean()
+            const result = await this.model.find().lean()
             return result;
         } catch (error) {
             console.log("getProduct:", error.message);

@@ -21,4 +21,10 @@ const cartSchema = new mongoose.Schema({
     }    
 });
 
+
+cartSchema.pre(["getCartById", "findById"], function(next) {
+    this.populate("products") //this hace referencia al modelo o a la consulta que estemos haciendo
+    next()
+})
+
 export const cartModel = mongoose.model(cartsCollection, cartSchema)

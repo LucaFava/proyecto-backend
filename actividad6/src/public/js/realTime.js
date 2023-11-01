@@ -1,3 +1,5 @@
+
+
 const socketClient = io()
 // elementos
 const prods = document.querySelector(".listRealTime")
@@ -27,8 +29,8 @@ form.addEventListener("submit", (e)=>{
 
 
 // funcion para eliminar el producto
-const deleteProd = (_id)=>{
-    console.log("id del prod:",_id);
+const deleteCartProd = (id)=>{
+    console.log("id del prod:",id);
 }
 // recibimos los productos
 socketClient.on("products", (data)=>{
@@ -41,7 +43,7 @@ socketClient.on("products", (data)=>{
         <div class="name"><h4>${element.title}</h4></div>
         <div class="price"><p>${element.price}</p></div>
         
-        <button onClick="deleteProd(${element._id})">Eliminar</button>
+        <button onClick="deleteCartProd('${element._id}')">Eliminar</button>
         
         `
         prods.append(article)

@@ -20,6 +20,7 @@ router.get("/", async(req, res)=>{
         nextLink: products.nextLink
 
     }
+    // console.log(dataProducts);
     res.render("home",  dataProducts)
 })
 // ruta para la view de los productos en tiempo real
@@ -31,9 +32,10 @@ router.get("/realtimeproducts", (req, res)=>{
 router.get("/carts/:cid", async(req, res)=>{
     const idCart = req.params.cid
     const prodsCarts = await cartsService.getCartById(idCart)
-    
-    console.log(prodsCarts);
-    res.render("cart", prodsCarts)
+    const dataProds = prodsCarts.products
+
+    console.log(dataProds);
+    res.render("cart", dataProds)
     
 })
 

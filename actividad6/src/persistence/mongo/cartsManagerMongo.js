@@ -8,7 +8,7 @@ export class CartsManagerMongo{
 
     async getCart(){
         try {
-            const result = await this.model.find()
+            const result = await this.model.find().lean()
             if (!result) {
                 throw new Error("El carrito solicitado no existe, pruebe con otro")
             };
@@ -32,7 +32,7 @@ export class CartsManagerMongo{
     
     async getCartById(idCart){
         try {
-            const result = await this.model.findById(idCart).populate("products.productId"); //en caso de no encontrar el carrito solicitado el servidor puede devolver un undefinded, para evitar eso, hay que hacer una validacion para tener más controlado los resultados
+            const result = await this.model.findById(idCart).populate("products.productId").lean(); //en caso de no encontrar el carrito solicitado el servidor puede devolver un undefinded, para evitar eso, hay que hacer una validacion para tener más controlado los resultados
             if (!result) {
                 throw new Error("El carrito solicitado no existe, pruebe con otro")
             };

@@ -1,13 +1,14 @@
 <h1>Carrito</h1>
 
-{{#each productId}}
+{{#each dataProds}}
 
     <article class="card-cart">
-        <h1>{{this.title}}</h1>
+        {{this.productId.title}}
+
+        {{this.quantity}}
     </article>
 
 {{/each }}
-
 
 
 

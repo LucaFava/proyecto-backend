@@ -34,8 +34,8 @@ router.get("/carts/:cid", async(req, res)=>{
     const prodsCarts = await cartsService.getCartById(idCart)
     const dataProds = prodsCarts.products
 
-    console.log(dataProds);
-    res.render("cart", dataProds)
+    // console.log(dataProds);
+    res.render("cart", {dataProds})
     
 })
 

@@ -9,7 +9,7 @@ import path from "path"
 import { engine } from "express-handlebars"
 
 import { Server } from "socket.io"
-import { productsService } from "./persistence/index.js";
+import { cartsService, productsService } from "./persistence/index.js";
 
 import { viewsRouter } from "./routes/views.routes.js";
 import { connectDB } from "./config/dbConnection.js";
@@ -67,6 +67,15 @@ io.on("connection", async(socket)=>{
        const products = await productsService.getProduct()
        
        io.emit("products", products)
+    })
+
+    // recibir producto agregado
+
+    socket.on("addProdCart", async(data)=>{
+        console.log(data);
+        // agrego al carrito mediante el metodo
+        const result = await cartsService.addProdCart("653ea55a0eef0ebbc9ac2e49", data);
+        console.log(result);
     })
 })
 

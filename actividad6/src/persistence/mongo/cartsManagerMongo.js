@@ -48,14 +48,15 @@ export class CartsManagerMongo{
             // primero obtenemos el carrito
             const cart = await this.model.findById(cartId)
             // validacion de si el producto ya existe
-            const prodExist = cart.products.find(e => e.productId = productId)
+            // const prodExist = cart.products.find(e => e.productId = productId)
             // console.log("prodExist:", prodExist);
             const newProdCart = {
                 productId: productId,
-                quantity: 1
+                quantity: 1 
             };
-        
             cart.products.push(newProdCart)
+            
+        
             const result = await this.model.findByIdAndUpdate(cartId, cart, {new:true})
             return result;
             

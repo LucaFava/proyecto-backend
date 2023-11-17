@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         required:true,
         // posibles categorias
-        enums:["remera", "abrigos", "zapatillas"]
+        enums:["remera", "abrigo", "zapatilla"]
     },
     price:{
         type: Number,

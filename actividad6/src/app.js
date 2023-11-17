@@ -1,4 +1,6 @@
-import express from "express"
+import express from "express";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 import { prodRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
@@ -13,6 +15,7 @@ import { cartsService, productsService } from "./persistence/index.js";
 
 import { viewsRouter } from "./routes/views.routes.js";
 import { connectDB } from "./config/dbConnection.js";
+import { sessionsRouter } from "./routes/sessions.routes.js";
 
 // const managerProductService =  new ProductManager("../productos.json")
 // console.log(productsService);
@@ -31,9 +34,9 @@ app.use(viewsRouter) //en este caso no hay una ruta especificada, ya que la idea
 
 // middleware
 app.use(express.static(path.join(__dirname, "/public")))
-
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+
 
 
 //conexión base de datos
@@ -44,12 +47,31 @@ app.engine('.hbs', engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, "/views"));
 
+// configuración de session
+app.use(session({
+
+    // agregar el sistema de almacenamiento de sesiones de mongo
+    store: MongoStore.create({
+        ttl: 0,
+        // indicar en que base de datos vamos a estar guardando las sesiones 
+        mongoUrl: "mongodb+srv://lucafavarel:Luca.Fava456@cluster0.jojn5mi.mongodb.net/ecommerceDB?retryWrites=true&w=majority"
+    }),
+    secret: "claveSession",
+    resave: true,
+    saveUninitialized: true
+
+}));
 
 
 // routes principales
  
 app.use("/api/products", prodRouter)
 app.use("/api/carts", cartsRouter)
+app.use("/api/sessions", sessionsRouter)
+
+
+
+
 
 
 // socket configuracion

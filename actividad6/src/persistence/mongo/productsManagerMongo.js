@@ -66,9 +66,10 @@ export class ProductsManagerMongo {
         }
     };
 
-    async getProductPaginate(){
+    async getProductPaginate(query, options){
         try {
-            const result = this.model.paginate({},{limit:5, page:1, lean:true});
+            // aca recibimos las query(filtros) y el options(limit,page) desde la ruta de la view
+            const result = this.model.paginate(query, options);
             return result;
         } catch (error) {
             console.log("getProductPaginate:", error.message);

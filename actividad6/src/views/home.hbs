@@ -1,21 +1,24 @@
 <h1>Inicio</h1>
 
-
+<h2>Bienvenido</h2>
 {{#each payload}}
-        <article class="card">
-            <div class="img">
-                {{this.image}}
-            </div>
-            <div class="datos">
-                {{this.title}}
+<section class="productos">
+    <article class="card">
+        <div class="img">
+            {{this.image}}
+        </div>
+        <div class="datos">
+            {{this.title}}
 
-                {{this.price}}
-            </div>
-            <button class="btn-add" onclick="addToCart(`{{this._id}}`)">agregar al carrito</button>
-        </article>
+            {{this.price}}
+        </div>
+        <button class="btn-add" onclick="addToCart(`{{this._id}}`)">agregar al carrito</button>
+    </article>
+</section>
+        
 {{/each}}
 
-<button>Prev</button><button>Next</button>
+<button><a href="{{prevLink}}">Anterior</a></button><button><a href="{{nextLink}}">Siguiente</a></button>
 
 
 <script src="socket.io/socket.io.js"></script>

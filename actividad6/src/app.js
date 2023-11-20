@@ -29,8 +29,8 @@ const httpServer = app.listen(port, () => console.log("servidor funcionando"))
 const io = new Server(httpServer)
 
 
-// ruta de las views
-app.use(viewsRouter) //en este caso no hay una ruta especificada, ya que la idea es que cuando el usuario ingrese ya se muestren los productos
+//conexión base de datos
+connectDB();
 
 // middleware
 app.use(express.static(path.join(__dirname, "/public")))
@@ -39,8 +39,8 @@ app.use(express.urlencoded({extended:true}))
 
 
 
-//conexión base de datos
-connectDB();
+
+
 
 // config de handlebars
 app.engine('.hbs', engine({extname: '.hbs'}));
@@ -61,15 +61,13 @@ app.use(session({
     saveUninitialized: true
 
 }));
-
+app.use(viewsRouter)
 
 // routes principales
- 
+
 app.use("/api/products", prodRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/api/sessions", sessionsRouter)
-
-
 
 
 

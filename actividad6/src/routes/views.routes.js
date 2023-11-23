@@ -32,8 +32,9 @@ router.get("/", async(req, res)=>{
         baseUrl.replace(`page=${products.page}`, `page=${products.nextPage}`) : baseUrl.concat(`?page=${products.nextPage}`) : null
 
     }
-    console.log(dataProducts);
-    res.render("home",  dataProducts)
+    
+    // console.log(dataProducts);
+    res.render("home", dataProducts)
 });
 // ruta para la view de los productos en tiempo real
 router.get("/realtimeproducts", (req, res)=>{
@@ -52,7 +53,7 @@ router.get("/carts/:cid", async(req, res)=>{
 });
 
 // ruta view para el registro
-router.get("/signUp",(req,res)=>{
+router.get("/signup",(req,res)=>{
     res.render("signUp")
 });
 
@@ -63,12 +64,14 @@ router.get("/login",(req,res)=>{
 
 // profile
 router.get("/profile",(req,res)=>{
+    const userEmail = req.session.email
     if (req.session.email) {
         const userEmail = req.session.email
         res.render("profile", {userEmail})
     } else {
         res.redirect("/login")
     }
+    console.log(userEmail);
 })
 
 

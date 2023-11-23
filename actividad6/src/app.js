@@ -33,14 +33,9 @@ const io = new Server(httpServer)
 connectDB();
 
 // middleware
-app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-
-
-
-
-
+app.use(express.static(path.join(__dirname, "/public")))
 
 // config de handlebars
 app.engine('.hbs', engine({extname: '.hbs'}));
@@ -56,15 +51,15 @@ app.use(session({
         // indicar en que base de datos vamos a estar guardando las sesiones 
         mongoUrl: "mongodb+srv://lucafavarel:Luca.Fava456@cluster0.jojn5mi.mongodb.net/ecommerceDB?retryWrites=true&w=majority"
     }),
-    secret: "claveSession",
+    secret: "claveSessionCoder",
     resave: true,
     saveUninitialized: true
 
 }));
-app.use(viewsRouter)
+
 
 // routes principales
-
+app.use(viewsRouter)
 app.use("/api/products", prodRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/api/sessions", sessionsRouter)

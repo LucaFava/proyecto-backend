@@ -64,14 +64,13 @@ router.get("/login",(req,res)=>{
 
 // profile
 router.get("/profile",(req,res)=>{
-    const userEmail = req.session.email
     if (req.session.email) {
         const userEmail = req.session.email
+        console.log(userEmail);
         res.render("profile", {userEmail})
     } else {
         res.redirect("/login")
     }
-    console.log(userEmail);
 })
 
 

@@ -47,7 +47,7 @@ app.use(session({
 
     // agregar el sistema de almacenamiento de sesiones de mongo
     store: MongoStore.create({
-        ttl: 0,
+        ttl: 20000,
         // indicar en que base de datos vamos a estar guardando las sesiones 
         mongoUrl: "mongodb+srv://lucafavarel:Luca.Fava456@cluster0.jojn5mi.mongodb.net/ecommerceDB?retryWrites=true&w=majority"
     }),

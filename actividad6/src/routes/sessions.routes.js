@@ -23,8 +23,10 @@ router.post("/signup", async(req,res)=>{
 router.post("/login", async(req,res)=>{
     try {
         const loginForm = req.body;
+        console.log(loginForm);
         // validar si el usuario ya existe en la base de datos
         const user = await usersModel.findOne({email: loginForm.email})
+        console.log(user);
         if (!user) {
             return res.render("login", {error: "no se pudo iniciar sesión, debes registrarte primero"});
         }
@@ -38,6 +40,23 @@ router.post("/login", async(req,res)=>{
     } catch (error) {
         // si hay un error volver a renderizar la lista 
         res.render("login", {error: "no se pudo iniciar sesión"})
+    }
+})
+
+// ruta para cerrar sesión 
+router.get("/logout", async(req,res)=>{
+    try {
+        req.session.destroy(error => {
+            if(error){
+                return res.render("profile", {error:"no se pudo cerrar la sesión"});
+            } else{
+                res.redirect("/")
+            }
+           
+        })
+    } catch (error) {
+        // si hay un error volver a renderizar la sista 
+        res.render("signUp", {error: error.message})
     }
 })
 

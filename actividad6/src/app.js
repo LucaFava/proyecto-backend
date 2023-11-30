@@ -17,6 +17,11 @@ import { viewsRouter } from "./routes/views.routes.js";
 import { connectDB } from "./config/dbConnection.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
 
+import passport from "passport"
+import { initializatePassword } from "./config/passport.config.js";
+
+import { config } from "./config/config.js";
+
 // const managerProductService =  new ProductManager("../productos.json")
 // console.log(productsService);
 const port = process.env.PORT || 8080
@@ -49,13 +54,21 @@ app.use(session({
     store: MongoStore.create({
         ttl: 20000,
         // indicar en que base de datos vamos a estar guardando las sesiones 
-        mongoUrl: "mongodb+srv://lucafavarel:Luca.Fava456@cluster0.jojn5mi.mongodb.net/ecommerceDB?retryWrites=true&w=majority"
+        mongoUrl:config.mongo.url
     }),
-    secret: "claveSessionCoder",
+    secret: config.server.secretSession,
     resave: true,
     saveUninitialized: true
 
 }));
+
+// config de passport
+initializatePassword()
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 
 
 // routes principales

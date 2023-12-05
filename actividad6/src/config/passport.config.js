@@ -52,7 +52,21 @@ export const initializatePassword = ()=>{
         // profile son los datos del perfil de github del usuario
         async(accesToken, refreshToken, profile, done)=>{
             try {
-                console.log("profile", profile);
+                // console.log("profile", profile);
+                const user = await usersModel.findOne({email:profile.username});
+                if (user) {
+                    // el usuario ya esta registrado
+                    return done(null, user)
+                }
+                // el usuario no esta registrado
+                const newUser = {
+                    first_name: profile.username,
+                    email: profile.username,
+                    password: createHash(profile.id)
+                }
+                console.log(newUser);
+                const userCreated = await usersModel.create(newUser)
+                return done(null, userCreated)
             } catch (error) {
                 return done(error)
             }

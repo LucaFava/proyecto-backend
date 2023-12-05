@@ -23,18 +23,17 @@ router.get("/signup-github", passport.authenticate("signupGithubStrategy"))
 router.get(config.github.callbackUrl, passport.authenticate("signupGithubStrategy",{
     failureRedirect: "/api/sessions/fail-signup"
 }), (req, res)=>{
-    res.render("login", {message: "usuario registrado correctamente"})
+   res.redirect("/profile")
 })
 
 
 
 // ruta para iniciar sesión
 router.post("/login", passport.authenticate("loginLocalStrategy",{failureRedirect: "/api/sessions/fail-login"}) ,async(req,res)=>{
- 
-        res.redirect("/profile");
-        // si hay un error volver a renderizar la lista 
-       
+
+    res.redirect("/profile");
 })
+// si hay un error volver a renderizar la lista 
 router.get("/fail-login",(req,res)=>{
     res.render("login", {error: "no se pudo iniciar sesión"})
 })

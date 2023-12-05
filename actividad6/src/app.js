@@ -54,9 +54,9 @@ app.use(session({
     store: MongoStore.create({
         ttl: 20000,
         // indicar en que base de datos vamos a estar guardando las sesiones 
-        mongoUrl:config.mongo.url
+        mongoUrl:"mongodb+srv://lucafavarel:Luca.Fava456@cluster0.jojn5mi.mongodb.net/ecommerceDB?retryWrites=true&w=majority"
     }),
-    secret: config.server.secretSession,
+    secret: "claveSessionCoder",
     resave: true,
     saveUninitialized: true
 

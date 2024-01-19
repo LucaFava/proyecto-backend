@@ -3,8 +3,12 @@
 {{!-- mostrar posible error --}}
 <p>{{error}}</p>
 
-<form method="post" action="/api/sessions/signup">
+<form method="post" action="api/sessions/signup">
     <input type="text" name="first_name" placeholder="Ingrese su nombre">
+    <br><br>
+    <input type="text" name="last_name" placeholder="Ingrese su apellido">
+    <br><br>
+    <input type="text" name="age" placeholder="Ingrese su edad">
     <br><br>
     <input type="email" name="email" placeholder="Ingrese su email">
     <br><br>

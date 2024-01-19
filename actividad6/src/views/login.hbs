@@ -1,10 +1,10 @@
 <h1>Inicio de sesión</h1>
 
 <p>{{message}}</p>
-<p>{{error}}</p>
+<p id="errorMsg">{{error}}</p>
 
 
-<form  method="post" action="/api/sessions/login">
+<form id="loginForm">
 
 <input type="email" name="email" placeholder="Ingrese su email">
 
@@ -12,3 +12,5 @@
 
 <button>Iniciar sesión</button>
 </form>
+
+<script src="/js/login.js"></script>

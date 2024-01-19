@@ -1,12 +1,16 @@
-<h1>Bienvenido {{userEmail}}</h1>
-
+<h1 id="welcomeUser"></h1>
+{{message}}
 {{error}}
 
 <section class="banner">
     <img src="" alt="foto de perfil">
-    <h1>{{userEmail}}</h1>
+    <h1>{{user.first_name}}</h1>
 </section>
 
 <section class="btn-logout">
    <a href="/api/sessions/logout">Cerrar sesión</a>
 </section>
+
+
+
+<script src="/js/profile.js"></script>

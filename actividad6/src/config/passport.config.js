@@ -1,9 +1,14 @@
 import passport from "passport"
 import localStrategy from "passport-local"
-import { createHash, isValidPassword } from "../utils.js"
+import { PRIVATE_KEY, createHash, isValidPassword } from "../utils.js"
 import { usersModel } from "../persistence/mongo/models/users.model.js"
-import { config } from "./config.js"
 import GithubStrategy from "passport-github2"
+import { userService } from "../persistence/index.js"
+import jwt from "passport-jwt"
+
+const JWTStrategy = jwt.Strategy;
+const extractJwt = jwt.ExtractJwt
+
 
 // passport se va a encargar de toda la lógica de autenticación, por lo que pronto tendremos que reemplazar el código de las rutas del archivo sessions.routes.js
 export const initializatePassword = ()=>{
@@ -20,9 +25,9 @@ export const initializatePassword = ()=>{
             usernameField: "email" //le asignamos a "username" el valor del campo email
         },
         async(req, username, password, done)=>{
-            const {first_name} = req.body;
+            const {first_name, last_name,age} = req.body;
             try {
-                const user = await usersModel.findOne({email:username});
+                const user = await userService.getUserByEmail(username)
                 if (user) {
                     // el usuario ya esta registrado
                     return done(null, false)
@@ -30,11 +35,13 @@ export const initializatePassword = ()=>{
                 // el usuario no esta registrado
                 const newUser = {
                     first_name,
+                    last_name,
+                    age,
                     email: username,
                     password: createHash(password)
                 }
                 console.log(newUser);
-                const userCreated = await usersModel.create(newUser)
+                const userCreated = await userService.createUser(newUser)
                 return done(null, userCreated)
             } catch (error) {
                return done(error)
@@ -45,9 +52,9 @@ export const initializatePassword = ()=>{
     // estrategia de registro con github
     passport.use("signupGithubStrategy", new GithubStrategy(
         {
-            clientID: config.github.clientId,
-            clientSecret: config.github.secretKey,
-            callbackURL:`http://localhost:8080/api/sessions${config.github.callbackUrl}`
+            clientID:"Iv1.0bb9551b6da5cf14",
+            clientSecret: "4769d07c59d0db20ebc6b38b91df3ea1fe572acc",
+            callbackURL:"http://localhost:8080/api/sessions/github-callback"
         },
         // profile son los datos del perfil de github del usuario
         async(accesToken, refreshToken, profile, done)=>{
@@ -82,7 +89,7 @@ export const initializatePassword = ()=>{
         },
         async(username, password, done)=>{
             try {
-                const user = await usersModel.findOne({email:username});
+                const user = await userService.getUserByEmail(username);
                 if (!user) {
                     // el usuario no esta registrado
                     return done(null, false)
@@ -100,15 +107,29 @@ export const initializatePassword = ()=>{
         }
     ));
     
-
-
-
-    passport.serializeUser((user, done)=>{
-        done(null, user._id)
-    })
-
-    passport.deserializeUser(async(id, done)=>{
-        const user = await usersModel.findById(id)
-        done(null,user)
-    });
+    // estrategia de jwt
+    passport.use("jwtAuth", new JWTStrategy(
+        {
+            // extraer la info del token
+            jwtFromRequest:extractJwt.fromExtractors([cookieExtractor]),
+            secretOrKey:PRIVATE_KEY
+        },
+        async (jwtPayload, done)=>{
+            try {
+                return done(null, jwtPayload)
+            } catch (error) {
+                return done(error)
+            }
+        }
+    ))
+};
+// funcion para extraer el token
+const cookieExtractor = (req)=>{
+    let token;
+    if (req && req.cookies) {
+        token = req.cookies["accessToken"]
+    } else {
+        token= null
+    };
+    return token
 }

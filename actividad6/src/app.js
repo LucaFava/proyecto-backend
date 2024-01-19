@@ -1,6 +1,5 @@
 import express from "express";
-import session from "express-session";
-import MongoStore from "connect-mongo";
+
 
 import { prodRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
@@ -19,8 +18,7 @@ import { sessionsRouter } from "./routes/sessions.routes.js";
 
 import passport from "passport"
 import { initializatePassword } from "./config/passport.config.js";
-
-import { config } from "./config/config.js";
+import cookieParser from "cookie-parser"
 
 // const managerProductService =  new ProductManager("../productos.json")
 // console.log(productsService);
@@ -41,41 +39,22 @@ connectDB();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join(__dirname, "/public")))
-
+app.use(cookieParser())
 // config de handlebars
 app.engine('.hbs', engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, "/views"));
 
-// configuración de session
-app.use(session({
-
-    // agregar el sistema de almacenamiento de sesiones de mongo
-    store: MongoStore.create({
-        ttl: 20000,
-        // indicar en que base de datos vamos a estar guardando las sesiones 
-        mongoUrl:"mongodb+srv://lucafavarel:Luca.Fava456@cluster0.jojn5mi.mongodb.net/ecommerceDB?retryWrites=true&w=majority"
-    }),
-    secret: "claveSessionCoder",
-    resave: true,
-    saveUninitialized: true
-
-}));
 
 // config de passport
 initializatePassword()
 app.use(passport.initialize());
-app.use(passport.session());
-
-
-
-
 
 // routes principales
 app.use(viewsRouter)
 app.use("/api/products", prodRouter)
 app.use("/api/carts", cartsRouter)
-app.use("/api/sessions", sessionsRouter)
+app.use("/api/sessions",sessionsRouter)
 
 
 

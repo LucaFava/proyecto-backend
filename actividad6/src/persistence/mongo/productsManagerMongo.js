@@ -7,7 +7,6 @@ export class ProductsManagerMongo {
     };
 
 
-
     async getProduct(){
         try {
             const result = await this.model.find().lean()

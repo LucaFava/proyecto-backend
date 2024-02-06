@@ -14,7 +14,7 @@ console.log("dirname: ", path.join(__dirname, "/files"));//unir rutas con path
 
 
 
-export const productsService = new ProductsManagerMongo()
+export const productsDao = new ProductsManagerMongo()
 export const cartsService = new CartsManagerMongo()
 export const chatsService = new ChatManagerMongo()
 export const userService = new UsersManagerMongo()

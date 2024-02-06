@@ -1,5 +1,5 @@
 import fs from "fs"
-import { productsService } from "./index.js"
+import { ProductsService } from "../services/products.service.js" 
 import { cartsService } from "./index.js"
 
 

@@ -10,7 +10,8 @@ import path from "path"
 import { engine } from "express-handlebars"
 
 import { Server } from "socket.io"
-import { cartsService, productsService } from "./persistence/index.js";
+import { cartsService } from "./persistence/index.js";
+import { ProductsService } from "./services/products.service.js"; 
 
 import { viewsRouter } from "./routes/views.routes.js";
 import { connectDB } from "./config/dbConnection.js";
@@ -62,7 +63,7 @@ app.use("/api/sessions",sessionsRouter)
 // socket configuracion
 io.on("connection", async(socket)=>{
     console.log("cliente conectado");
-    const products = await productsService.getProduct()
+    const products = await ProductsService.getProds()
 
     socket.emit("products", products)
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { productsService } from "../persistence/index.js";
+import { ProductsService } from "../services/products.service.js";
 import { cartsService } from "../persistence/index.js";
 
 const router = Router()
@@ -16,7 +16,7 @@ router.get("/", async(req, res)=>{
         sort:{price:1},
         lean: true
     }
-    const products = await productsService.getProductPaginate(query, options);
+    const products = await ProductsService.getProductPaginate(query, options);
     const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
     const dataProducts = {
         status:"success",

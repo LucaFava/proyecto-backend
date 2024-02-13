@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ProductsService } from "../services/products.service.js";
-import { cartsService } from "../persistence/index.js";
+import { CartsService } from "../services/carts.service.js"; 
 
 const router = Router()
 
@@ -44,7 +44,7 @@ router.get("/realtimeproducts", (req, res)=>{
 // ruta para la view del carrito
 router.get("/carts/:cid", async(req, res)=>{
     const idCart = req.params.cid
-    const prodsCarts = await cartsService.getCartById(idCart)
+    const prodsCarts = await CartsService.getCartById(idCart)
     const dataProds = prodsCarts.products
 
     // console.log(dataProds);

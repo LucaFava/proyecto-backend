@@ -10,7 +10,7 @@ import path from "path"
 import { engine } from "express-handlebars"
 
 import { Server } from "socket.io"
-import { cartsService } from "./persistence/index.js";
+import { CartsService } from "./services/carts.service.js"; 
 import { ProductsService } from "./services/products.service.js"; 
 
 import { viewsRouter } from "./routes/views.routes.js";
@@ -70,9 +70,9 @@ io.on("connection", async(socket)=>{
     // recibir el prod del socketClient
     socket.on("addProd", async(data)=>{
         // agregamos el prod
-        await productsService.addProd(data)
+        await ProductsService.createProds(data)
         // volvemos a enviar todos los productos
-       const products = await productsService.getProduct()
+       const products = await ProductsService.getProds()
        
        io.emit("products", products)
     })
@@ -82,7 +82,7 @@ io.on("connection", async(socket)=>{
     socket.on("addProdCart", async(data)=>{
         console.log(data);
         // agrego al carrito mediante el metodo
-        const result = await cartsService.addProdCart("653ea55a0eef0ebbc9ac2e49", data);
+        const result = await CartsService.addProdCart("653ea55a0eef0ebbc9ac2e49", data);
         console.log(result);
     })
 })

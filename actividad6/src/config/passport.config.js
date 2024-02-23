@@ -124,7 +124,7 @@ export const initializatePassword = ()=>{
     ))
 };
 // funcion para extraer el token
-const cookieExtractor = (req)=>{
+export const cookieExtractor = (req)=>{
     let token;
     if (req && req.cookies) {
         token = req.cookies["accessToken"]

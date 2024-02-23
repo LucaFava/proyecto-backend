@@ -70,5 +70,32 @@ export class CartsController{
         } catch (error) {
             res.json({message:error.message})
         }
+    };
+
+    static purchaseCart = async(req, res)=>{
+        try {
+            const {cid : cartId} = req.params;
+
+            const cart = await CartsService.getCartById(cartId) 
+            console.log("cart", cart);
+            // verificar el stock de cada producto
+            if (cart.products.length > 0) {
+                const ticketsProducts = []
+                const rejectedProducts = []
+                for (let i = 0; i<cart.products.length; i++) {
+                    const cartProduct = cart.products[i]
+                    const productInfo = cartProduct.productId
+                    console.log("productInfo",productInfo);
+                    // por cada producto comparar la cantidad con el stock
+                    if (cartProduct.quantity < productInfo.stock) {
+                        
+                    }
+                }
+            } else {
+                res.json({status:"error", messagge:"el carrito esta vacio"})
+            }
+        } catch (error) {
+            res.json({message:error.message})
+        }
     }
 }

@@ -1,6 +1,5 @@
 import { Router } from "express";
 import passport from "passport"
-import { generateToken } from "../utils.js";
 import { SessionsControler } from "../controllers/sessions.controller.js"; 
 
 const router = Router()
@@ -25,7 +24,7 @@ router.get("/github-callback", passport.authenticate("signupGithubStrategy",{
 
 
 // ruta para iniciar sesión
-router.post("/login", passport.authenticate("loginLocalStrategy",{failureRedirect: "/api/sessions/fail-login", session:false}),SessionsControler.login)
+router.post("/login", passport.authenticate("loginLocalStrategy",{failureRedirect: "/api/sessions/fail-login",session:false}),SessionsControler.login)
 // si hay un error volver a renderizar la lista 
 router.get("/fail-login", SessionsControler.failLogin)
 

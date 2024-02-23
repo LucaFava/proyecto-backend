@@ -82,13 +82,8 @@ io.on("connection", async(socket)=>{
     socket.on("addProdCart", async(data)=>{
         console.log(data);
         // agrego al carrito mediante el metodo
-        const result = await CartsService.addProdCart("653ea55a0eef0ebbc9ac2e49", data);
+        const result = await CartsService.addProdCart("65d623db03e2c65a5d65a300", data);
         console.log(result);
     })
 })
-
-
-
-
-
 

@@ -21,7 +21,7 @@ export class ProductsService{
         productsDao.deleteProd(idProd)
     }
 
-    static getProductPaginate = (query,options)=>{
+    static getProductPaginate = (query, options)=>{
         productsDao.getProductPaginate(query, options)
     }
 }

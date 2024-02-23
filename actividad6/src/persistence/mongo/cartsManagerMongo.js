@@ -34,7 +34,7 @@ export class CartsManagerMongo{
         try {
             const result = await this.model.findById(idCart).populate("products.productId").lean(); //en caso de no encontrar el carrito solicitado el servidor puede devolver un undefinded, para evitar eso, hay que hacer una validacion para tener más controlado los resultados
             if (!result) {
-                throw new Error("El carrito solicitado no existe, pruebe con otro")
+                return new Error("El carrito solicitado no existe, pruebe con otro")
             };
             return result;
         } catch (error) {
@@ -56,10 +56,8 @@ export class CartsManagerMongo{
             };
             cart.products.push(newProdCart)
             
-        
             const result = await this.model.findByIdAndUpdate(cartId, cart, {new:true})
             return result;
-            
             
         } catch (error) {
             console.log(error.message);

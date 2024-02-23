@@ -19,4 +19,7 @@ router.delete("/:cid/product/:pid", CartsController.deleteProd);
 
 // ruta para cambiar la cantidad de un producto
 router.put("/:cid/product/:pid", CartsController.updateProd)
+
+// ruta para crear un ticket
+router.post("/:cid/purchase", CartsController.purchaseCart)
 export {router as cartsRouter}

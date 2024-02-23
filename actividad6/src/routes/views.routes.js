@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ProductsService } from "../services/products.service.js";
 import { CartsService } from "../services/carts.service.js"; 
+import { productsDao } from "../persistence/index.js";
 
 const router = Router()
 
@@ -16,7 +17,7 @@ router.get("/", async(req, res)=>{
         sort:{price:1},
         lean: true
     }
-    const products = await ProductsService.getProductPaginate(query, options);
+    const products = await productsDao.getProductPaginate(query, options);
     const baseUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
     const dataProducts = {
         status:"success",

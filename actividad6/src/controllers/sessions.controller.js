@@ -1,3 +1,6 @@
+import { generateToken } from "../utils.js"; 
+
+
 export class SessionsControler{
     static redirectLogin = (req,res)=>{
         res.redirect("/login");
@@ -23,17 +26,11 @@ export class SessionsControler{
 
     static logout = async(req,res)=>{
         try {
-            req.session.destroy(error => {
-                if(error){
-                    return res.render("profile", {error:"no se pudo cerrar la sesión"});
-                } else{
-                    res.redirect("/")
-                }
-               
-            })
+            res.clearCookie("accessToken");
+            res.redirect("/")
         } catch (error) {
             // si hay un error volver a renderizar la sista 
-            res.render("signUp", {error: error.message})
+            res.render("profile", {error: error.message})
         }
     }
 
